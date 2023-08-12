@@ -1,0 +1,1525 @@
+<!DOCTYPE html>
+<html :class="{ 'theme-dark': dark }" x-data="data()" lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Dashboard</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./assets/css/tailwind.output.css" />
+    <script
+      src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
+      defer
+    ></script>
+    <script src="./assets/js/init-alpine.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"
+      defer
+    ></script>
+    <script src="./assets/js/charts-lines.js" defer></script>
+    <script src="./assets/js/charts-pie.js" defer></script>
+  </head>
+  <body>
+    <div
+      class="flex h-screen bg-gray-50 dark:bg-gray-900"
+      :class="{ 'overflow-hidden': isSideMenuOpen }"
+    >
+      <!-- Desktop sidebar -->
+      <aside
+        class="z-20 hidden w-64 overflow-y-auto bg-white dark:bg-gray-800 md:block flex-shrink-0"
+      >
+        <div class="py-4 text-gray-500 dark:text-gray-400">
+          <a
+            class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200"
+            href="#"
+          >
+           Dbithub
+          </a>
+          <ul class="mt-6">
+            <li class="relative px-6 py-3">
+              <span
+                class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
+                aria-hidden="true"
+              ></span>
+              <a
+                class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
+                href="index.html"
+              >
+                <svg
+                  class="w-5 h-5"
+                  aria-hidden="true"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                  ></path>
+                </svg>
+                <span class="ml-4">Dashboard</span>
+              </a>
+            </li>
+          </ul>
+          <ul>
+            <li class="relative px-6 py-3">
+              <a
+                class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                href="forms.html"
+              >
+                <svg
+                  class="w-5 h-5"
+                  aria-hidden="true"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
+                  ></path>
+                </svg>
+                <span class="ml-4">Forms</span>
+              </a>
+            </li>
+            <li class="relative px-6 py-3">
+              <a
+                class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                href="cards.html"
+              >
+                <svg
+                  class="w-5 h-5"
+                  aria-hidden="true"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+                  ></path>
+                </svg>
+                <span class="ml-4">Cards</span>
+              </a>
+            </li>
+            <li class="relative px-6 py-3">
+              <a
+                class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                href="charts.html"
+              >
+                <svg
+                  class="w-5 h-5"
+                  aria-hidden="true"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"
+                  ></path>
+                  <path d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
+                </svg>
+                <span class="ml-4">Charts</span>
+              </a>
+            </li>
+            <li class="relative px-6 py-3">
+              <a
+                class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                href="buttons.html"
+              >
+                <svg
+                  class="w-5 h-5"
+                  aria-hidden="true"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"
+                  ></path>
+                </svg>
+                <span class="ml-4">Buttons</span>
+              </a>
+            </li>
+            <li class="relative px-6 py-3">
+              <a
+                class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                href="modals.html"
+              >
+                <svg
+                  class="w-5 h-5"
+                  aria-hidden="true"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+                  ></path>
+                </svg>
+                <span class="ml-4">Modals</span>
+              </a>
+            </li>
+            <li class="relative px-6 py-3">
+              <a
+                class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                href="tables.html"
+              >
+                <svg
+                  class="w-5 h-5"
+                  aria-hidden="true"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+                </svg>
+                <span class="ml-4">Tables</span>
+              </a>
+            </li>
+            <li class="relative px-6 py-3">
+              <button
+                class="inline-flex items-center justify-between w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                @click="togglePagesMenu"
+                aria-haspopup="true"
+              >
+                <span class="inline-flex items-center">
+                  <svg
+                    class="w-5 h-5"
+                    aria-hidden="true"
+                    fill="none"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"
+                    ></path>
+                  </svg>
+                  <span class="ml-4">Pages</span>
+                </span>
+                <svg
+                  class="w-4 h-4"
+                  aria-hidden="true"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+              </button>
+              <template x-if="isPagesMenuOpen">
+                <ul
+                  x-transition:enter="transition-all ease-in-out duration-300"
+                  x-transition:enter-start="opacity-25 max-h-0"
+                  x-transition:enter-end="opacity-100 max-h-xl"
+                  x-transition:leave="transition-all ease-in-out duration-300"
+                  x-transition:leave-start="opacity-100 max-h-xl"
+                  x-transition:leave-end="opacity-0 max-h-0"
+                  class="p-2 mt-2 space-y-2 overflow-hidden text-sm font-medium text-gray-500 rounded-md shadow-inner bg-gray-50 dark:text-gray-400 dark:bg-gray-900"
+                  aria-label="submenu"
+                >
+                  <li
+                    class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                  >
+                    <a class="w-full" href="pages/login.html">Login</a>
+                  </li>
+                  <li
+                    class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                  >
+                    <a class="w-full" href="pages/create-account.html">
+                      Create account
+                    </a>
+                  </li>
+                  <li
+                    class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                  >
+                    <a class="w-full" href="pages/forgot-password.html">
+                      Forgot password
+                    </a>
+                  </li>
+                  <li
+                    class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                  >
+                    <a class="w-full" href="pages/404.html">404</a>
+                  </li>
+                  <li
+                    class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                  >
+                    <a class="w-full" href="pages/blank.html">Blank</a>
+                  </li>
+                </ul>
+              </template>
+            </li>
+          </ul>
+          <div class="px-6 my-6">
+            <button
+              class="flex items-center justify-between w-full px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+            >
+              Create account
+              <span class="ml-2" aria-hidden="true">+</span>
+            </button>
+          </div>
+        </div>
+      </aside>
+      <!-- Mobile sidebar -->
+      <!-- Backdrop -->
+      <div
+        x-show="isSideMenuOpen"
+        x-transition:enter="transition ease-in-out duration-150"
+        x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100"
+        x-transition:leave="transition ease-in-out duration-150"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0"
+        class="fixed inset-0 z-10 flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center"
+      ></div>
+      <aside
+        class="fixed inset-y-0 z-20 flex-shrink-0 w-64 mt-16 overflow-y-auto bg-white dark:bg-gray-800 md:hidden"
+        x-show="isSideMenuOpen"
+        x-transition:enter="transition ease-in-out duration-150"
+        x-transition:enter-start="opacity-0 transform -translate-x-20"
+        x-transition:enter-end="opacity-100"
+        x-transition:leave="transition ease-in-out duration-150"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0 transform -translate-x-20"
+        @click.away="closeSideMenu"
+        @keydown.escape="closeSideMenu"
+      >
+        <div class="py-4 text-gray-500 dark:text-gray-400">
+          <a
+            class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200"
+            href="#"
+          >
+            Dbithub
+          </a>
+          <ul class="mt-6">
+            <li class="relative px-6 py-3">
+              <span
+                class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
+                aria-hidden="true"
+              ></span>
+              <a
+                class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
+                href="index.html"
+              >
+                <svg
+                  class="w-5 h-5"
+                  aria-hidden="true"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                  ></path>
+                </svg>
+                <span class="ml-4">Dashboard</span>
+              </a>
+            </li>
+          </ul>
+          <ul>
+            <li class="relative px-6 py-3">
+              <a
+                class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                href="forms.html"
+              >
+                <svg
+                  class="w-5 h-5"
+                  aria-hidden="true"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
+                  ></path>
+                </svg>
+                <span class="ml-4">Forms</span>
+              </a>
+            </li>
+            <li class="relative px-6 py-3">
+              <a
+                class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                href="cards.html"
+              >
+                <svg
+                  class="w-5 h-5"
+                  aria-hidden="true"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+                  ></path>
+                </svg>
+                <span class="ml-4">Cards</span>
+              </a>
+            </li>
+            <li class="relative px-6 py-3">
+              <a
+                class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                href="charts.html"
+              >
+                <svg
+                  class="w-5 h-5"
+                  aria-hidden="true"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"
+                  ></path>
+                  <path d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
+                </svg>
+                <span class="ml-4">Charts</span>
+              </a>
+            </li>
+            <li class="relative px-6 py-3">
+              <a
+                class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                href="buttons.html"
+              >
+                <svg
+                  class="w-5 h-5"
+                  aria-hidden="true"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"
+                  ></path>
+                </svg>
+                <span class="ml-4">Buttons</span>
+              </a>
+            </li>
+            <li class="relative px-6 py-3">
+              <a
+                class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                href="modals.html"
+              >
+                <svg
+                  class="w-5 h-5"
+                  aria-hidden="true"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+                  ></path>
+                </svg>
+                <span class="ml-4">Modals</span>
+              </a>
+            </li>
+            <li class="relative px-6 py-3">
+              <a
+                class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                href="tables.html"
+              >
+                <svg
+                  class="w-5 h-5"
+                  aria-hidden="true"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+                </svg>
+                <span class="ml-4">Tables</span>
+              </a>
+            </li>
+            <li class="relative px-6 py-3">
+              <button
+                class="inline-flex items-center justify-between w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                @click="togglePagesMenu"
+                aria-haspopup="true"
+              >
+                <span class="inline-flex items-center">
+                  <svg
+                    class="w-5 h-5"
+                    aria-hidden="true"
+                    fill="none"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"
+                    ></path>
+                  </svg>
+                  <span class="ml-4">Pages</span>
+                </span>
+                <svg
+                  class="w-4 h-4"
+                  aria-hidden="true"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+              </button>
+              <template x-if="isPagesMenuOpen">
+                <ul
+                  x-transition:enter="transition-all ease-in-out duration-300"
+                  x-transition:enter-start="opacity-25 max-h-0"
+                  x-transition:enter-end="opacity-100 max-h-xl"
+                  x-transition:leave="transition-all ease-in-out duration-300"
+                  x-transition:leave-start="opacity-100 max-h-xl"
+                  x-transition:leave-end="opacity-0 max-h-0"
+                  class="p-2 mt-2 space-y-2 overflow-hidden text-sm font-medium text-gray-500 rounded-md shadow-inner bg-gray-50 dark:text-gray-400 dark:bg-gray-900"
+                  aria-label="submenu"
+                >
+                  <li
+                    class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                  >
+                    <a class="w-full" href="pages/login.html">Login</a>
+                  </li>
+                  <li
+                    class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                  >
+                    <a class="w-full" href="pages/create-account.html">
+                      Create account
+                    </a>
+                  </li>
+                  <li
+                    class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                  >
+                    <a class="w-full" href="pages/forgot-password.html">
+                      Forgot password
+                    </a>
+                  </li>
+                  <li
+                    class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                  >
+                    <a class="w-full" href="pages/404.html">404</a>
+                  </li>
+                  <li
+                    class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                  >
+                    <a class="w-full" href="pages/blank.html">Blank</a>
+                  </li>
+                </ul>
+              </template>
+            </li>
+          </ul>
+          <div class="px-6 my-6">
+            <button
+              class="flex items-center justify-between px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+            >
+              Create account
+              <span class="ml-2" aria-hidden="true">+</span>
+            </button>
+          </div>
+        </div>
+      </aside>
+      <div class="flex flex-col flex-1 w-full">
+        <header class="z-10 py-4 bg-white shadow-md dark:bg-gray-800">
+          <div
+            class="container flex items-center justify-between h-full px-6 mx-auto text-purple-600 dark:text-purple-300"
+          >
+            <!-- Mobile hamburger -->
+            <button
+              class="p-1 mr-5 -ml-1 rounded-md md:hidden focus:outline-none focus:shadow-outline-purple"
+              @click="toggleSideMenu"
+              aria-label="Menu"
+            >
+              <svg
+                class="w-6 h-6"
+                aria-hidden="true"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+            </button>
+            <!-- Search input -->
+            <div class="flex justify-center flex-1 lg:mr-32">
+              <div
+                class="relative w-full max-w-xl mr-6 focus-within:text-purple-500"
+              >
+                <div class="absolute inset-y-0 flex items-center pl-2">
+                  <svg
+                    class="w-4 h-4"
+                    aria-hidden="true"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                </div>
+                <input
+                  class="w-full pl-8 pr-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input"
+                  type="text"
+                  placeholder="Search for projects"
+                  aria-label="Search"
+                />
+              </div>
+            </div>
+            <ul class="flex items-center flex-shrink-0 space-x-6">
+              <!-- Theme toggler --
+              <li class="flex">
+                <button
+                  class="rounded-md focus:outline-none focus:shadow-outline-purple"
+                  @click="toggleTheme"
+                  aria-label="Toggle color mode"
+                >
+                  <template x-if="!dark">
+                    <svg
+                      class="w-5 h-5"
+                      aria-hidden="true"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                      ></path>
+                    </svg>
+                  </template>
+                  <template x-if="dark">
+                    <svg
+                      class="w-5 h-5"
+                      aria-hidden="true"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                  </template>
+                </button>
+              </li>-->
+              <!-- Notifications menu -->
+              <li class="relative">
+                <button
+                  class="relative align-middle rounded-md focus:outline-none focus:shadow-outline-purple"
+                  @click="toggleNotificationsMenu"
+                  @keydown.escape="closeNotificationsMenu"
+                  aria-label="Notifications"
+                  aria-haspopup="true"
+                >
+                  <svg
+                    class="w-5 h-5"
+                    aria-hidden="true"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"
+                    ></path>
+                  </svg>
+                  <!-- Notification badge -->
+                  <span
+                    aria-hidden="true"
+                    class="absolute top-0 right-0 inline-block w-3 h-3 transform translate-x-1 -translate-y-1 bg-red-600 border-2 border-white rounded-full dark:border-gray-800"
+                  ></span>
+                </button>
+                <template x-if="isNotificationsMenuOpen">
+                  <ul
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    @click.away="closeNotificationsMenu"
+                    @keydown.escape="closeNotificationsMenu"
+                    class="absolute right-0 w-56 p-2 mt-2 space-y-2 text-gray-600 bg-white border border-gray-100 rounded-md shadow-md dark:text-gray-300 dark:border-gray-700 dark:bg-gray-700"
+                  >
+                    <li class="flex">
+                      <a
+                        class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
+                        href="#"
+                      >
+                        <span>Messages</span>
+                        <span
+                          class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-600 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-600"
+                        >
+                          13
+                        </span>
+                      </a>
+                    </li>
+                    <li class="flex">
+                      <a
+                        class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
+                        href="#"
+                      >
+                        <span>Sales</span>
+                        <span
+                          class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-600 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-600"
+                        >
+                          2
+                        </span>
+                      </a>
+                    </li>
+                    <li class="flex">
+                      <a
+                        class="inline-flex items-center justify-between w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
+                        href="#"
+                      >
+                        <span>Alerts</span>
+                      </a>
+                    </li>
+                  </ul>
+                </template>
+              </li>
+              <!-- Profile menu -->
+              <li class="relative">
+                <button
+                  class="align-middle rounded-full focus:shadow-outline-purple focus:outline-none"
+                  @click="toggleProfileMenu"
+                  @keydown.escape="closeProfileMenu"
+                  aria-label="Account"
+                  aria-haspopup="true"
+                >
+                  <img
+                    class="object-cover w-8 h-8 rounded-full"
+                    src="https://images.unsplash.com/photo-1502378735452-bc7d86632805?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=aa3a807e1bbdfd4364d1f449eaa96d82"
+                    alt=""
+                    aria-hidden="true"
+                  />
+                </button>
+                <template x-if="isProfileMenuOpen">
+                  <ul
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                    @click.away="closeProfileMenu"
+                    @keydown.escape="closeProfileMenu"
+                    class="absolute right-0 w-56 p-2 mt-2 space-y-2 text-gray-600 bg-white border border-gray-100 rounded-md shadow-md dark:border-gray-700 dark:text-gray-300 dark:bg-gray-700"
+                    aria-label="submenu"
+                  >
+                    <li class="flex">
+                      <a
+                        class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
+                        href="#"
+                      >
+                        <svg
+                          class="w-4 h-4 mr-3"
+                          aria-hidden="true"
+                          fill="none"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                          ></path>
+                        </svg>
+                        <span>Profile</span>
+                      </a>
+                    </li>
+                    <li class="flex">
+                      <a
+                        class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
+                        href="#"
+                      >
+                        <svg
+                          class="w-4 h-4 mr-3"
+                          aria-hidden="true"
+                          fill="none"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+                          ></path>
+                          <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                        <span>Settings</span>
+                      </a>
+                    </li>
+                    <li class="flex">
+                      <a
+                        class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
+                        href="#"
+                      >
+                        <svg
+                          class="w-4 h-4 mr-3"
+                          aria-hidden="true"
+                          fill="none"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
+                          ></path>
+                        </svg>
+                        <span>Log out</span>
+                      </a>
+                    </li>
+                  </ul>
+                </template>
+              </li>
+            </ul>
+          </div>
+        </header>
+        <main class="h-full overflow-y-auto">
+          <div class="container px-6 mx-auto grid">
+            <h2
+              class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200"
+            >
+              Dashboard
+            </h2>
+            <!-- CTA -->
+         <!----   <a
+              class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple"
+              href="https://github.com/estevanmaito/windmill-dashboard"
+            >
+              <div class="flex items-center">
+                <svg
+                  class="w-5 h-5 mr-2"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                  ></path>
+                </svg>
+                <span>Star this project on GitHub</span>
+              </div>
+              <span>View more &RightArrow;</span>
+            </a>
+            <!-- Cards -->
+            <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
+              <!-- Card -->
+              <div
+                class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
+              >
+                <div
+                  class="p-3 mr-4 text-orange-500 bg-orange-100 rounded-full dark:text-orange-100 dark:bg-orange-500"
+                >
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                      d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"
+                    ></path>
+                  </svg>
+                </div>
+                <div>
+                  <p
+                    class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400"
+                  >
+                    Total projects
+                  </p>
+                  <p
+                    class="text-lg font-semibold text-gray-700 dark:text-gray-200"
+                  >
+                    29
+                  </p>
+                </div>
+              </div>
+              <!-- Card -->
+              <div
+                class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
+              >
+                <div
+                  class="p-3 mr-4 text-green-500 bg-green-100 rounded-full dark:text-green-100 dark:bg-green-500"
+                >
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                      fill-rule="evenodd"
+                      d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                </div>
+                <div>
+                  <p
+                    class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400"
+                  >
+                    Number of Users
+                  </p>
+                  <p
+                    class="text-lg font-semibold text-gray-700 dark:text-gray-200"
+                  >
+                    290
+                  </p>
+                </div>
+              </div>
+              <!-- Card -->
+              <div
+                class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
+              >
+                <div
+                  class="p-3 mr-4 text-blue-500 bg-blue-100 rounded-full dark:text-blue-100 dark:bg-blue-500"
+                >
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                      d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"
+                    ></path>
+                  </svg>
+                </div>
+                <div>
+                  <p
+                    class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400"
+                  >
+                    Your projects
+                  </p>
+                  <p
+                    class="text-lg font-semibold text-gray-700 dark:text-gray-200"
+                  >
+                    2
+                  </p>
+                </div>
+              </div>
+              <!-- Card -->
+              <div
+                class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
+              >
+                <div
+                  class="p-3 mr-4 text-teal-500 bg-teal-100 rounded-full dark:text-teal-100 dark:bg-teal-500"
+                >
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                      fill-rule="evenodd"
+                      d="M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zM7 8H5v2h2V8zm2 0h2v2H9V8zm6 0h-2v2h2V8z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                </div>
+                <div>
+                  <p
+                    class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400"
+                  >
+                    You projects approved
+                  </p>
+                  <p
+                    class="text-lg font-semibold text-gray-700 dark:text-gray-200"
+                  >
+                    1
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- New Table -->
+            <div class="w-full overflow-hidden rounded-lg shadow-xs">
+              <div class="w-full overflow-x-auto">
+                <table class="w-full whitespace-no-wrap">
+                  <thead>
+                    <tr
+                      class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
+                    >
+                      <th class="px-4 py-3">Project</th>
+                      <th class="px-4 py-3">likes</th>
+                      <th class="px-4 py-3">Status</th>
+                      <th class="px-4 py-3">Date</th>
+                    </tr>
+                  </thead>
+                  <tbody
+                    class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800"
+                  >
+                    <tr class="text-gray-700 dark:text-gray-400">
+                      <td class="px-4 py-3">
+                        <div class="flex items-center text-sm">
+                          <!-- Avatar with inset shadow -->
+                          <div
+                            class="relative hidden w-8 h-8 mr-3 rounded-full md:block"
+                          >
+                            <img
+                              class="object-cover w-full h-full rounded-full"
+                              src="https://img.favpng.com/3/24/10/computer-icons-website-world-wide-web-favicon-png-favpng-8e5EXTU0A9ugbgeM8v61HQ4si.jpg"
+                              alt=""
+                              loading="lazy"
+                            />
+                            <div
+                              class="absolute inset-0 rounded-full shadow-inner"
+                              aria-hidden="true"
+                            ></div>
+                          </div>
+                          <div>
+                            <p class="font-semibold">A website for student management</p>
+                            <p class="text-xs text-gray-600 dark:text-gray-400">
+                              Web Development
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="px-4 py-3 text-sm">
+                        10
+                      </td>
+                      <td class="px-4 py-3 text-xs">
+                        <span
+                          class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100"
+                        >
+                          Approved
+                        </span>
+                      </td>
+                      <td class="px-4 py-3 text-sm">
+                        6/10/2020
+                      </td>
+                    </tr>
+
+                    <tr class="text-gray-700 dark:text-gray-400">
+                      <td class="px-4 py-3">
+                        <div class="flex items-center text-sm">
+                          <!-- Avatar with inset shadow -->
+                          <div
+                            class="relative hidden w-8 h-8 mr-3 rounded-full md:block"
+                          >
+                            <img
+                              class="object-cover w-full h-full rounded-full"
+                              src="data:image/jpeg;base64,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"
+                              alt=""
+                              loading="lazy"
+                            />
+                            <div
+                              class="absolute inset-0 rounded-full shadow-inner"
+                              aria-hidden="true"
+                            ></div>
+                          </div>
+                          <div>
+                            <p class="font-semibold">Face Recognition based Attendance</p>
+                            <p class="text-xs text-gray-600 dark:text-gray-400">
+                              AI And ML
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="px-4 py-3 text-sm">
+                        -
+                      </td>
+                      <td class="px-4 py-3 text-xs">
+                        <span
+                          class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600"
+                        >
+                          Pending
+                        </span>
+                      </td>
+                      <td class="px-4 py-3 text-sm">
+                        6/10/2020
+                      </td>
+                    </tr>
+
+                    <tr class="text-gray-700 dark:text-gray-400">
+                      <td class="px-4 py-3">
+                        <div class="flex items-center text-sm">
+                          <!-- Avatar with inset shadow -->
+                          <div
+                            class="relative hidden w-8 h-8 mr-3 rounded-full md:block"
+                          >
+                            <img
+                              class="object-cover w-full h-full rounded-full"
+                              src="https://img.favpng.com/3/24/10/computer-icons-website-world-wide-web-favicon-png-favpng-8e5EXTU0A9ugbgeM8v61HQ4si.jpg"
+                              alt=""
+                              loading="lazy"
+                            />
+                            <div
+                              class="absolute inset-0 rounded-full shadow-inner"
+                              aria-hidden="true"
+                            ></div>
+                          </div>
+                          <div>
+                            <p class="font-semibold">Notes Website</p>
+                            <p class="text-xs text-gray-600 dark:text-gray-400">
+                              Web Development
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="px-4 py-3 text-sm">
+                        -
+                      </td>
+                      <td class="px-4 py-3 text-xs">
+                        <span
+                          class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-700"
+                        >
+                          Denied
+                        </span>
+                      </td>
+                      <td class="px-4 py-3 text-sm">
+                        6/10/2020
+                      </td>
+                    </tr>
+
+                   <!--- <tr class="text-gray-700 dark:text-gray-400">
+                      <td class="px-4 py-3">
+                        <div class="flex items-center text-sm">
+                          <!-- Avatar with inset shadow --
+                          <div
+                            class="relative hidden w-8 h-8 mr-3 rounded-full md:block"
+                          >
+                            <img
+                              class="object-cover w-full h-full rounded-full"
+                              src="https://images.unsplash.com/photo-1551006917-3b4c078c47c9?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
+                              alt=""
+                              loading="lazy"
+                            />
+                            <div
+                              class="absolute inset-0 rounded-full shadow-inner"
+                              aria-hidden="true"
+                            ></div>
+                          </div>
+                          <div>
+                            <p class="font-semibold">Rulia Joberts</p>
+                            <p class="text-xs text-gray-600 dark:text-gray-400">
+                              Actress
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="px-4 py-3 text-sm">
+                        $ 1276.45
+                      </td>
+                      <td class="px-4 py-3 text-xs">
+                        <span
+                          class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100"
+                        >
+                          Approved
+                        </span>
+                      </td>
+                      <td class="px-4 py-3 text-sm">
+                        6/10/2020
+                      </td>
+                    </tr>--
+
+                    <tr class="text-gray-700 dark:text-gray-400">
+                      <td class="px-4 py-3">
+                        <div class="flex items-center text-sm">
+                          <!-- Avatar with inset shadow --
+                          <div
+                            class="relative hidden w-8 h-8 mr-3 rounded-full md:block"
+                          >
+                            <img
+                              class="object-cover w-full h-full rounded-full"
+                              src="https://images.unsplash.com/photo-1546456073-6712f79251bb?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
+                              alt=""
+                              loading="lazy"
+                            />
+                            <div
+                              class="absolute inset-0 rounded-full shadow-inner"
+                              aria-hidden="true"
+                            ></div>
+                          </div>
+                          <div>
+                            <p class="font-semibold">Wenzel Dashington</p>
+                            <p class="text-xs text-gray-600 dark:text-gray-400">
+                              Actor
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="px-4 py-3 text-sm">
+                        $ 863.45
+                      </td>
+                      <td class="px-4 py-3 text-xs">
+                        <span
+                          class="px-2 py-1 font-semibold leading-tight text-gray-700 bg-gray-100 rounded-full dark:text-gray-100 dark:bg-gray-700"
+                        >
+                          Expired
+                        </span>
+                      </td>
+                      <td class="px-4 py-3 text-sm">
+                        6/10/2020
+                      </td>
+                    </tr>
+
+                    <tr class="text-gray-700 dark:text-gray-400">
+                      <td class="px-4 py-3">
+                        <div class="flex items-center text-sm">
+                          <!-- Avatar with inset shadow --
+                          <div
+                            class="relative hidden w-8 h-8 mr-3 rounded-full md:block"
+                          >
+                            <img
+                              class="object-cover w-full h-full rounded-full"
+                              src="https://images.unsplash.com/photo-1502720705749-871143f0e671?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=b8377ca9f985d80264279f277f3a67f5"
+                              alt=""
+                              loading="lazy"
+                            />
+                            <div
+                              class="absolute inset-0 rounded-full shadow-inner"
+                              aria-hidden="true"
+                            ></div>
+                          </div>
+                          <div>
+                            <p class="font-semibold">Dave Li</p>
+                            <p class="text-xs text-gray-600 dark:text-gray-400">
+                              Influencer
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="px-4 py-3 text-sm">
+                        $ 863.45
+                      </td>
+                      <td class="px-4 py-3 text-xs">
+                        <span
+                          class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100"
+                        >
+                          Approved
+                        </span>
+                      </td>
+                      <td class="px-4 py-3 text-sm">
+                        6/10/2020
+                      </td>
+                    </tr>
+
+                    <tr class="text-gray-700 dark:text-gray-400">
+                      <td class="px-4 py-3">
+                        <div class="flex items-center text-sm">
+                          <!-- Avatar with inset shadow --
+                          <div
+                            class="relative hidden w-8 h-8 mr-3 rounded-full md:block"
+                          >
+                            <img
+                              class="object-cover w-full h-full rounded-full"
+                              src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
+                              alt=""
+                              loading="lazy"
+                            />
+                            <div
+                              class="absolute inset-0 rounded-full shadow-inner"
+                              aria-hidden="true"
+                            ></div>
+                          </div>
+                          <div>
+                            <p class="font-semibold">Maria Ramovic</p>
+                            <p class="text-xs text-gray-600 dark:text-gray-400">
+                              Runner
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="px-4 py-3 text-sm">
+                        $ 863.45
+                      </td>
+                      <td class="px-4 py-3 text-xs">
+                        <span
+                          class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100"
+                        >
+                          Approved
+                        </span>
+                      </td>
+                      <td class="px-4 py-3 text-sm">
+                        6/10/2020
+                      </td>
+                    </tr>
+
+                    <tr class="text-gray-700 dark:text-gray-400">
+                      <td class="px-4 py-3">
+                        <div class="flex items-center text-sm">
+                          <!-- Avatar with inset shadow --
+                          <div
+                            class="relative hidden w-8 h-8 mr-3 rounded-full md:block"
+                          >
+                            <img
+                              class="object-cover w-full h-full rounded-full"
+                              src="https://images.unsplash.com/photo-1566411520896-01e7ca4726af?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
+                              alt=""
+                              loading="lazy"
+                            />
+                            <div
+                              class="absolute inset-0 rounded-full shadow-inner"
+                              aria-hidden="true"
+                            ></div>
+                          </div>
+                          <div>
+                            <p class="font-semibold">Hitney Wouston</p>
+                            <p class="text-xs text-gray-600 dark:text-gray-400">
+                              Singer
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="px-4 py-3 text-sm">
+                        $ 863.45
+                      </td>
+                      <td class="px-4 py-3 text-xs">
+                        <span
+                          class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100"
+                        >
+                          Approved
+                        </span>
+                      </td>
+                      <td class="px-4 py-3 text-sm">
+                        6/10/2020
+                      </td>
+                    </tr>
+
+                    <tr class="text-gray-700 dark:text-gray-400">
+                      <td class="px-4 py-3">
+                        <div class="flex items-center text-sm">
+                          <!-- Avatar with inset shadow --
+                          <div
+                            class="relative hidden w-8 h-8 mr-3 rounded-full md:block"
+                          >
+                            <img
+                              class="object-cover w-full h-full rounded-full"
+                              src="https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
+                              alt=""
+                              loading="lazy"
+                            />
+                            <div
+                              class="absolute inset-0 rounded-full shadow-inner"
+                              aria-hidden="true"
+                            ></div>
+                          </div>
+                          <div>
+                            <p class="font-semibold">Hans Burger</p>
+                            <p class="text-xs text-gray-600 dark:text-gray-400">
+                              10x Developer
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="px-4 py-3 text-sm">
+                        $ 863.45
+                      </td>
+                      <td class="px-4 py-3 text-xs">
+                        <span
+                          class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100"
+                        >
+                          Approved
+                        </span>
+                      </td>
+                      <td class="px-4 py-3 text-sm">
+                        6/10/2020
+                      </td>
+                    </tr>-->
+                  </tbody>
+                </table>
+              </div>
+              <div
+                class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800"
+              >
+            <!----    <span class="flex items-center col-span-3">
+                  Showing 21-30 of 100
+                </span>
+                <span class="col-span-2"></span>
+                <!-- Pagination --
+                <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
+                  <nav aria-label="Table navigation">
+                    <ul class="inline-flex items-center">
+                      <li>
+                        <button
+                          class="px-3 py-1 rounded-md rounded-l-lg focus:outline-none focus:shadow-outline-purple"
+                          aria-label="Previous"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class="w-4 h-4 fill-current"
+                            viewBox="0 0 20 20"
+                          >
+                            <path
+                              d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                              clip-rule="evenodd"
+                              fill-rule="evenodd"
+                            ></path>
+                          </svg>
+                        </button>
+                      </li>
+                      <li>
+                        <button
+                          class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple"
+                        >
+                          1
+                        </button>
+                      </li>
+                      <li>
+                        <button
+                          class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple"
+                        >
+                          2
+                        </button>
+                      </li>
+                      <li>
+                        <button
+                          class="px-3 py-1 text-white transition-colors duration-150 bg-purple-600 border border-r-0 border-purple-600 rounded-md focus:outline-none focus:shadow-outline-purple"
+                        >
+                          3
+                        </button>
+                      </li>
+                      <li>
+                        <button
+                          class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple"
+                        >
+                          4
+                        </button>
+                      </li>
+                      <li>
+                        <span class="px-3 py-1">...</span>
+                      </li>
+                      <li>
+                        <button
+                          class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple"
+                        >
+                          8
+                        </button>
+                      </li>
+                      <li>
+                        <button
+                          class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple"
+                        >
+                          9
+                        </button>
+                      </li>
+                      <li>
+                        <button
+                          class="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-purple"
+                          aria-label="Next"
+                        >
+                          <svg
+                            class="w-4 h-4 fill-current"
+                            aria-hidden="true"
+                            viewBox="0 0 20 20"
+                          >
+                            <path
+                              d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                              clip-rule="evenodd"
+                              fill-rule="evenodd"
+                            ></path>
+                          </svg>
+                        </button>
+                      </li>
+                    </ul>
+                  </nav>
+                </span>
+              </div>
+            </div>
+
+            <!-- Charts --
+            <h2
+              class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200"
+            >
+              Charts
+            </h2>
+            <div class="grid gap-6 mb-8 md:grid-cols-2">
+              <div
+                class="min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
+              >
+                <h4 class="mb-4 font-semibold text-gray-800 dark:text-gray-300">
+                  Revenue
+                </h4>
+                <canvas id="pie"></canvas>
+                <div
+                  class="flex justify-center mt-4 space-x-3 text-sm text-gray-600 dark:text-gray-400"
+                >
+                  <!-- Chart legend --
+                  <div class="flex items-center">
+                    <span
+                      class="inline-block w-3 h-3 mr-1 bg-blue-500 rounded-full"
+                    ></span>
+                    <span>Shirts</span>
+                  </div>
+                  <div class="flex items-center">
+                    <span
+                      class="inline-block w-3 h-3 mr-1 bg-teal-600 rounded-full"
+                    ></span>
+                    <span>Shoes</span>
+                  </div>
+                  <div class="flex items-center">
+                    <span
+                      class="inline-block w-3 h-3 mr-1 bg-purple-600 rounded-full"
+                    ></span>
+                    <span>Bags</span>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
+              >
+                <h4 class="mb-4 font-semibold text-gray-800 dark:text-gray-300">
+                  Traffic
+                </h4>
+                <canvas id="line"></canvas>
+                <div
+                  class="flex justify-center mt-4 space-x-3 text-sm text-gray-600 dark:text-gray-400"
+                >
+                  <!-- Chart legend --
+                  <div class="flex items-center">
+                    <span
+                      class="inline-block w-3 h-3 mr-1 bg-teal-600 rounded-full"
+                    ></span>
+                    <span>Organic</span>
+                  </div>
+                  <div class="flex items-center">
+                    <span
+                      class="inline-block w-3 h-3 mr-1 bg-purple-600 rounded-full"
+                    ></span>
+                    <span>Paid</span>-->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>
